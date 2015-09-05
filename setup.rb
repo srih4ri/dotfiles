@@ -6,7 +6,8 @@ dot_files_map = {
   '.spacemacs' => '~/.spacemacs',
   'scripts/deploy.sh' => '~/scripts/deploy.sh',
   '.irbrc' => '~/.irbrc',
-  'rc.xml' => '~/.config/openbox/rc.xml'
+  'rc.xml' => '~/.config/openbox/rc.xml',
+  '.gitconfig' => '~/.gitconfig'
 }
 
 def create_folder_and_copy(source,dest)

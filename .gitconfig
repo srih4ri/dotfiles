@@ -1,0 +1,14 @@
+[push]
+	default = current
+[user]
+	email = srih4ri@gmail.com
+	name = Srihari K
+[core]
+        editor = emacsclient -a=\\\"\\\"
+	excludesfile = /home/neo/.gitignore_global
+[init]
+	templatedir = ~/.git-templates
+[rerere]
+	enabled = true
+[alias]
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset: %an  %Cgreen(%cr) :%C(yellow)%d%Creset %s%C(bold blue)%Creset' --abbrev-commit
