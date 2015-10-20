@@ -35,6 +35,7 @@
      ruby
      html
      clojure
+     ruby-on-rails
      )
    ;; List of additional packages that will be installed wihout being
    ;; wrapped in a layer. If you need some configuration for these
@@ -87,14 +88,14 @@ before layers configuration."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
-                         solarized-dark)
+   dotspacemacs-themes '(spacemacs-light
+                         spacemacs-dark)
    ;; If non nil the cursor color matches the state color.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
    dotspacemacs-default-font '("Ubuntu Mono"
-                               :size 18
+                               :size 16
                                :weight normal
                                :width normal)
    ;; The leader key
@@ -264,7 +265,11 @@ layers configuration."
  '(cua-read-only-cursor-color "#859900")
  '(custom-safe-themes
    (quote
-    ("3f630e9f343200ce27cfeb44f01c9046a4b2687a4751ba2b30e503da307cd27b" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default)))
+    ("99fce0c01e01cb934f373a3e8c3224f80be568c6d9a548975a5cb0a0910f0a60" "3f630e9f343200ce27cfeb44f01c9046a4b2687a4751ba2b30e503da307cd27b" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default)))
+ '(deft-directory "/home/neo/Dropbox/deft")
+ '(deft-extensions (quote ("'(\"txt\" \"tex\" \"org\" \"md\")")))
+ '(deft-time-format " %m-%d %H:%M")
+ '(deft-use-filename-as-title nil t)
  '(fci-rule-color "#eee8d5" t)
  '(fringe-mode 0 nil (fringe))
  '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
@@ -300,6 +305,7 @@ layers configuration."
  '(paradox-github-token t)
  '(pos-tip-background-color "#eee8d5")
  '(pos-tip-foreground-color "#586e75")
+ '(require-final-newline t)
  '(ring-bell-function (quote ignore) t)
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#eee8d5" 0.2))
  '(term-default-bg-color "#fdf6e3")
@@ -337,6 +343,7 @@ layers configuration."
  ;; If there is more than one, they won't work right.
  '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
  '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil))))
+ '(deft-summary-face ((t (:width condensed :family "Ubuntu Mono"))))
  '(linum ((t (:family "Ubuntu Mono"))))
  '(mode-line ((t (:foreground "#657b83" :family "Ubuntu Mono"))))
  '(mode-line-buffer-id ((t (:weight bold))))

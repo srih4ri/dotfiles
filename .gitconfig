@@ -11,4 +11,5 @@
 [rerere]
 	enabled = true
 [alias]
-	lg = log --color --graph --pretty=format:'%Cred%h%Creset: %an  %Cgreen(%cr) :%C(yellow)%d%Creset %s%C(bold blue)%Creset' --abbrev-commit
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset : %an  %Cgreen(%cr) :%C(yellow)%d%Creset %s%C(bold blue)%Creset' --abbrev-commit
+	lgr = log --color --after='yesterday' --reverse --pretty=format:'%Cred%h%Creset : %an  %Cgreen(%cr) :%C(yellow)%d%Creset %s%C(bold blue)%Creset' --abbrev-commit

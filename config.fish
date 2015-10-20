@@ -1,3 +1,5 @@
+#EDITOR
+set EDITOR emacsclient
 #PATH
 set -x PATH $PATH $HOME/.rbenv/bin $HOME/bin $HOME/code/tiny_scripts/scripts $GOPATH/bin $HOME/.composer/vendor/bin
 
@@ -37,7 +39,12 @@ alias grc='git rebase --continue'
 alias gdw='git diff -w'
 alias grc='git rebase --continue'
 alias gpf='git push --force-with-lease'
-
+alias create_test_db='env RAILS_ENV=test rake db:create'
+alias whats_wrong='bundle exec rspec spec --fail-fast'
+alias run_all_specs='bundle exec rspec spec'
+function run_spec
+  bundle exec rspec $argv
+end
 #Git helpers
 function current_branch
   git rev-parse --abbrev-ref HEAD
