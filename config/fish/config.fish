@@ -5,8 +5,8 @@ source "$HOME/.config/fish/config_secrets.fish"
 set -gx EDITOR emacsclient
 
 #PATH
-set PATH /home/srihari/.rbenv/bin $PATH
-set PATH /home/srihari/.local/bin $PATH
+set PATH $HOME/.rbenv/bin $PATH
+set PATH $HOME/.local/bin $PATH
 set PATH ./node_modules/.bin $PATH
 set -gx VOLTA_HOME "$HOME/.volta"
 set -gx PATH "$VOLTA_HOME/bin" $PATH
