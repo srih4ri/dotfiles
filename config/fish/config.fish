@@ -1,12 +1,20 @@
+# Source secret env vars and such
+source "$HOME/.config/fish/config_secrets.fish"
+
 #EDITOR
-set EDITOR emacsclient
+set -gx EDITOR emacsclient
+
 #PATH
 set PATH /home/srihari/.rbenv/bin $PATH
 set PATH /home/srihari/.local/bin $PATH
+set PATH ./node_modules/.bin $PATH
+set -gx VOLTA_HOME "$HOME/.volta"
+set -gx PATH "$VOLTA_HOME/bin" $PATH
 
 #ENV
 set -x WKHTMLTOPDF (which wkhtmltopdf)
-#emacs
+
+#ALIASES
 alias e='emacsclient -n '
 alias j='emacsclient ~/.j/journal.log'
 
@@ -30,6 +38,8 @@ alias gpf='git push --force-with-lease'
 alias create_test_db='env RAILS_ENV=test rake db:create'
 alias whats_wrong='bundle exec rspec spec --fail-fast'
 alias run_all_specs='bundle exec rspec spec'
+
+#FUNCTIONS
 function s
     if test -e bin/spring
         bin/spring rspec $argv
@@ -38,7 +48,7 @@ function s
     end
 end
 
-#Git helpers
+#FUNCTION Git helpers
 function current_branch
     git rev-parse --abbrev-ref HEAD
 end
@@ -54,11 +64,6 @@ end
 # gho issues to open issues page
 function gho
     xdg-open https://(git config --get remote.origin.url|sed -e s/.git//g|sed s,:,/,g)/$argv
-end
-
-function jira_ticket
-    set jira_base "https://clarkteam.atlassian.net"
-    xdg-open "$jira_base/browse/"(current_branch)
 end
 
 function first_push
@@ -160,10 +165,6 @@ function this_branch_param
     git branch ^/dev/null | grep \* | sed 's/* //' | sed 's/\//-/' | sed 's/_/-/g'
 end
 
-function psclark
-    psql -A postgresql://clark:clark@localhost/optisure_development $argv
-end
-
 function update_app
     git checkout master; and \
         git pull --rebase; and \
@@ -173,17 +174,16 @@ function update_app
 end
 
 status --is-interactive; and rbenv init - | source
-set -gx VOLTA_HOME "$HOME/.volta"
-set -gx PATH "$VOLTA_HOME/bin" $PATH
 
 export NODE_OPTIONS=--max-old-space-size=4096
 
 
-## Clark K8s helpers
+## SupermanCO K8s helpers
 ##
 
-function get_pod_with_name --argument pod_name --description "Get pod with a particular name"
-    kubectl get pods -o json -l app.kubernetes.io/name=application-backend | jq -r '.items[0].metadata.name'
+function get_pod_with_name --description "Get pod with a particular name" --argument pod_name
+    echo "Looking for pod $pod_name"
+    kubectl get pods -o json -l app.kubernetes.io/name=$pod_name | jq -r '.items[0].metadata.name'
 end
 
 function execute_command_on_pod --argument pod_name cmd --description "Execute a command on given pod name"
@@ -191,23 +191,34 @@ function execute_command_on_pod --argument pod_name cmd --description "Execute a
     kubectl exec -it $pod_name -- $cmd
 end
 
-function k8s_rails_c
+function k_rails_c
     echo "Getting pod for application backend"
     set pod (get_pod_with_name 'application_backend')
     echo "Executing /bin/sh on $pod"
     execute_command_on_pod $pod '/bin/sh'
 end
 
-function k8_login_to_cluster --argument cluster
+function k_rails_c_dj
+    echo "Getting pod for delayed-job"
+    set pod (get_pod_with_name 'delayed-job')
+    echo "Executing /bin/sh on $pod"
+    execute_command_on_pod $pod '/bin/sh'
+end
+
+function k_login_to_cluster --argument cluster
     aws --profile saml eks --region eu-central-1 update-kubeconfig --name $cluster
 end
 
-function k8_login_staging
-    k8_login_to_cluster staging
+function k_login_staging
+    k_login_to_cluster staging
 end
 
-function k8_login
-    k8_login_to_cluster development
+function k_login
+    k_login_to_cluster development
+end
+
+function rcs
+    s (git diff master --name-only spec/**.rb)
 end
 
 function lsj
@@ -240,4 +251,22 @@ function a
     ag --ignore='dist' $argv
 end
 
-set PATH ./node_modules/.bin $PATH
+function b --description "Jump to git root dir"
+    cd (git rev-parse --show-toplevel)
+end
+
+function l
+    ls -ltr
+end
+
+function t
+    tree -L 3
+end
+
+function g
+    git status .
+end
+
+function alexa
+    espeak "echo, $argv"
+end
