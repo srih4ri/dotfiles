@@ -1,0 +1,16 @@
+[push]
+	default = current
+[user]
+	email = srih4ri@gmail.com
+	name = Srihari Kookal
+[core]
+	editor = emacsclient -a=\\\"\\\"
+	excludesfile = ~/.gitignore_global
+[init]
+	templatedir = ~/.git-templates
+[rerere]
+	enabled = true
+[alias]
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset : %an  %Cgreen(%cr) :%C(yellow)%d%Creset %s%C(bold blue)%Creset' --abbrev-commit
+	lgr = log --color --after='yesterday' --reverse --pretty=format:'%Cred%h%Creset : %an  %Cgreen(%cr) :%C(yellow)%d%Creset %s%C(bold blue)%Creset' --abbrev-commit
+	work = log --pretty=format:'%C(yellow)%d%Creset %s %Cgreen %cD by %C(bold blue)%an%Creset' --abbrev-commit
