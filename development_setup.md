@@ -7,9 +7,24 @@ Following this guide, you will be able to setup a laptop for development.
 ## Switch ctrl and capslock
 Keyboard Settings -> Modifier Keys
 
+## Clone dot files 
+Clone this repo and run
+```
+./setup.rb install
+```
+
 ## Install an editor
 https://emacsformacosx.com
 http://code.visualstudio.com
 
 ### Setup editor
 Doom emacs config : ../config/emacs/doomemacs/
+
+### 
+
+### Install rbenv
+https://github.com/rbenv/rbenv
+```
+brew install rbenv ruby-build
+```
+
