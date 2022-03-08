@@ -1,4 +1,4 @@
-#.dotfiles
+# .dotfiles
 
 `./setup.rb update` to update all files in this folder from their source locations.
 
