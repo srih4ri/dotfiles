@@ -29,3 +29,8 @@ https://github.com/rbenv/rbenv
 brew install rbenv ruby-build
 ```
 
+### Install Volda
+https://volta.sh
+```
+curl https://get.volta.sh | bash
+```
