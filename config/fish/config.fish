@@ -41,7 +41,7 @@ alias run_all_specs='bundle exec rspec spec'
 
 #FUNCTIONS
 function s
-    if test -e bin/spring
+    if test -e bin/spring && false
         bin/spring rspec $argv
     else
         bundle exec rspec $argv
@@ -84,7 +84,7 @@ end
 function start_agent
     echo "Initializing new SSH agent ..."
     ssh-agent -c | sed 's/^echo/#echo/' >$SSH_ENV
-    echo "succeeded"
+    echo succeeded
     chmod 600 $SSH_ENV
     . $SSH_ENV >/dev/null
     ssh-add
@@ -162,15 +162,11 @@ function tbp
 end
 
 function this_branch_param
-    git branch ^/dev/null | grep \* | sed 's/* //' | sed 's/\//-/' | sed 's/_/-/g'
+    git branch ^/dev/null | grep \* | sed 's/* //' | sed 's/\//-/' | sed s/_/-/g
 end
 
 function update_app
-    git checkout master; and \
-        git pull --rebase; and \
-        bundle; and \
-        bundle exec rake db:migrate; and \
-        yarn
+    git checkout master; and git pull --rebase; and bundle; and bundle exec rake db:migrate; and yarn
 end
 
 status --is-interactive; and rbenv init - | source
@@ -195,14 +191,14 @@ function k_rails_c
     echo "Getting pod for application backend"
     set pod (get_pod_with_name 'application_backend')
     echo "Executing /bin/sh on $pod"
-    execute_command_on_pod $pod '/bin/sh'
+    execute_command_on_pod $pod /bin/sh
 end
 
 function k_rails_c_dj
     echo "Getting pod for delayed-job"
     set pod (get_pod_with_name 'delayed-job')
     echo "Executing /bin/sh on $pod"
-    execute_command_on_pod $pod '/bin/sh'
+    execute_command_on_pod $pod /bin/sh
 end
 
 function k_login_to_cluster --argument cluster
