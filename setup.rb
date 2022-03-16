@@ -3,12 +3,17 @@ require 'fileutils'
 
 dot_files_map = {
   "config/fish/config.fish" => "~/.config/fish/config.fish",
+
   "config/ruby/irbrc" => "~/.irbrc",
+
   "config/git/gitconfig" => "~/.gitconfig",
+
   "config/emacs/doom/custom.el" => "~/.doom.d/custom.el",
   "config/emacs/doom/config.el" => "~/.doom.d/config.el",
   "config/emacs/doom/init.el" => "~/.doom.d/init.el",
-  "config/emacs/doom/packages.el" => "~/.doom.d/packages.el"
+  "config/emacs/doom/packages.el" => "~/.doom.d/packages.el",
+
+  "config/tmux/tmux.conf" => "~/.tmux.conf"
 }
 
 def create_folder_and_copy(source,dest)
