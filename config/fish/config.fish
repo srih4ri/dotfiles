@@ -183,18 +183,16 @@ export NODE_OPTIONS=--max-old-space-size=4096
 ##
 
 function get_pod_with_name --description "Get pod with a particular name" --argument pod_name
-    echo "Looking for pod $pod_name"
-    kubectl get pods -o json -l app.kubernetes.io/name=$pod_name | jq -r '.items[0].metadata.name'
+    kubectl get pods -o json -l app.kubernetes.io/name=$pod_name | jq -r '.items|first|.metadata.name'
 end
 
 function execute_command_on_pod --argument pod_name cmd --description "Execute a command on given pod name"
-    echo "Executing $cmd on $pod_name"
     kubectl exec -it $pod_name -- $cmd
 end
 
 function k_rails_c
     echo "Getting pod for application backend"
-    set pod (get_pod_with_name 'application_backend')
+    set pod (get_pod_with_name 'application-backend')
     echo "Executing /bin/sh on $pod"
     execute_command_on_pod $pod '/bin/sh'
 end
