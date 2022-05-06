@@ -175,6 +175,8 @@ function update_app
 end
 
 status --is-interactive; and rbenv init - | source
+status is-login; and pyenv init --path | source
+status is-interactive; and pyenv init - | source
 
 export NODE_OPTIONS=--max-old-space-size=4096
 
