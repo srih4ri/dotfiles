@@ -3,14 +3,14 @@ source "$HOME/.config/fish/config_secrets.fish"
 
 #EDITOR
 set -gx EDITOR emacsclient
-
+set -gx GPG_TTY (tty)
 #PATH
 fish_add_path $HOME/.rbenv/bin
 fish_add_path $HOME/.local/bin
 fish_add_path ./node_modules/.bin
 fish_add_path $VOLTA_HOME/bin
 fish_add_path /usr/local/go/bin
-
+fish_add_path /Applications/Emacs.app/Contents/MacOS/
 if test -d /opt/homebrew/
     fish_add_path /opt/homebrew/sbin
     fish_add_path /opt/homebrew/bin
@@ -28,10 +28,14 @@ end
 set -x WKHTMLTOPDF (which wkhtmltopdf)
 set -gx VOLTA_HOME "$HOME/.volta"
 
+#GO
+set -x GOPATH $HOME/golang
+set -x GOROOT /opt/homebrew/opt/go/libexec
+set PATH $GOPATH/bin $GOROOT/bin $PATH
 #ALIASES
 alias e='emacsclient -n '
 alias j='emacsclient ~/.j/journal.log'
-
+alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs"
 #rails
 alias dl='tailf log/dev*.log'
 alias tl='tailf log/test.log'
@@ -44,7 +48,7 @@ alias push='git push'
 alias pull='git pull'
 alias gcm='git checkout master; or git checkout main'
 alias ggpur='git pull --rebase'
-alias clean_merged='git branch --merged | grep -v "\*" | grep -v master | grep -v dev | xargs -n 1 git branch -d'
+
 alias grc='git rebase --continue'
 alias gdw='git diff -w'
 alias grc='git rebase --continue'
@@ -55,7 +59,9 @@ alias run_all_specs='bundle exec rspec spec'
 
 #FUNCTIONS
 function s
-    if test -e bin/spring
+    if test -e bin/rspec
+        bin/rspec $argv
+    else if test -e bin/spring
         bin/spring rspec $argv
     else
         bundle exec rspec $argv
@@ -184,8 +190,6 @@ function update_app
 end
 
 status --is-interactive; and rbenv init - | source
-status is-login; and pyenv init --path | source
-status is-interactive; and pyenv init - | source
 
 export NODE_OPTIONS=--max-old-space-size=4096
 
@@ -209,14 +213,14 @@ function k_rails_c
 end
 
 function k_rails_c_dj
-    echo "Getting pod for delayed-job"
-    set pod (get_pod_with_name 'delayed-job')
+    echo "Getting pod for application delayed job default"
+    set pod (get_pod_with_name 'application-delayed-job-default')
     echo "Executing /bin/sh on $pod"
     execute_command_on_pod $pod /bin/sh
 end
 
 function k_login_to_cluster --argument cluster
-    aws --profile saml eks --region eu-central-1 update-kubeconfig --name $cluster
+    aws eks --region eu-central-1 update-kubeconfig --name $cluster
 end
 
 function k_login_staging
@@ -280,3 +284,37 @@ end
 function alexa
     espeak "echo, $argv"
 end
+
+function gdr
+    for f in (git diff --name-only)
+        rubocop -A $f
+    end
+end
+starship init fish | source
+source /opt/homebrew/opt/asdf/libexec/asdf.fish
+source ~/.config/fish/config-private.fish
+
+# pnpm
+set -gx PNPM_HOME /Users/sriharikookal/Library/pnpm
+if not string match -q -- $PNPM_HOME $PATH
+    set -gx PATH "$PNPM_HOME" $PATH
+end
+# pnpm end
+function set_namespace
+    kubens (current_branch|string lower)
+end
+
+function ccut
+    mlr --csv --ocsv cut $argv
+end
+
+function chead
+    mlr --csv --opprint head $argv
+end
+
+function clean_merged
+    git branch --merged | grep -v "\*"
+    git branch --merged | grep -v "\*" | grep -v 'master|main' | grep -v dev | xargs -n 1 git branch -d
+end
+
+alias k kubectl
