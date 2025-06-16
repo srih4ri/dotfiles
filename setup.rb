@@ -10,10 +10,10 @@ dot_files_map = {
 
   'config/git/gitconfig' => '~/.gitconfig',
 
-  'config/emacs/doom/custom.el' => '~/.doom.d/custom.el',
-  'config/emacs/doom/config.el' => '~/.doom.d/config.el',
-  'config/emacs/doom/init.el' => '~/.doom.d/init.el',
-  'config/emacs/doom/packages.el' => '~/.doom.d/packages.el',
+  'config/emacs/doom/custom.el' => '~/.config/doom/custom.el',
+  'config/emacs/doom/config.el' => '~/.config/doom/config.el',
+  'config/emacs/doom/init.el' => '~/.config/doom/init.el',
+  'config/emacs/doom/packages.el' => '~/.config/doom/packages.el',
 
   'config/tmux/tmux.conf' => '~/.tmux.conf'
 }
