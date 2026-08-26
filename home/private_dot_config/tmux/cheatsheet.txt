@@ -1,0 +1,51 @@
+  TMUX CHEATSHEET — prefix is Ctrl+B (press, release, then the next key)
+
+  PANES (splits inside one window)
+    "         split horizontally (one above the other)
+    %         split vertically   (one beside the other)
+    ← ↑ ↓ →   move focus to neighbouring pane
+    o         cycle focus to next pane
+    z         zoom — toggle pane to fullscreen
+    q         show pane numbers (then a digit jumps)
+    x         close current pane (asks confirmation)
+    { / }     swap with previous / next pane
+    Space     cycle through preset layouts
+    !         break pane out into its own window
+
+  WINDOWS (the "tabs" inside one session)
+    c         new window
+    ,         rename window
+    n  /  p   next / previous window
+    0 .. 9    jump to window N
+    w         list windows (interactive picker)
+    f         find window by name
+    &         kill window
+
+  SESSIONS (top-level — survives Ptyxis closing)
+    s         list sessions (picker)
+    d         detach (Ptyxis can close; the session keeps running)
+    $         rename session
+    (         /  )    previous / next session
+
+  COPY MODE  (vi-style; mouse drag also copies automatically)
+    [         enter copy mode
+    v         begin selection
+    y         copy to system clipboard (via wl-copy)
+    Enter     copy to system clipboard
+    q         quit copy mode
+    /   ?     search forward / backward
+    g  /  G   top / bottom of buffer
+
+  MISC
+    ?         this cheatsheet
+    :         command prompt (e.g. "kill-session", "new -s foo")
+    M         toggle mouse on/off  (if Claude Code's mouse gets eaten)
+    r         reload tmux config (if you bind one — not bound by default)
+    t         big clock
+
+  RE-ATTACHING AFTER CLOSING PTYXIS
+    $ tmux ls                    # list sessions still running
+    $ tmux attach -t <name>      # re-attach (e.g. tmux attach -t m0)
+    $ tmux kill-session -t <n>   # kill a session you don't want anymore
+
+  Press q to dismiss this popup.
