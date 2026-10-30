@@ -8,7 +8,12 @@ My Linux (GNOME) dotfiles, managed with [chezmoi](https://www.chezmoi.io/).
 - **git** — config (identity templated per machine) and global ignore
 - **tmux** — config + cheatsheet popup
 - **Doom Emacs** — config.el / init.el / packages.el / custom.el
-- **Terminals** — alacritty (+ gruvbox theme), kitty
+- **Terminals** — alacritty (+ gruvbox light/dark), kitty (+ gruvbox light/dark auto themes)
+- **Gruvbox light/dark** — GTK3/4 sharp-corner CSS, `gruvbox-theme-sync`
+  (`~/.local/bin`, systemd user service) which follows GNOME's Dark Style
+  toggle and switches GTK/shell theme, icons, Alacritty and Claude Code. The
+  themes themselves are built from upstream by
+  `run_once_after_install-gruvbox-themes.sh` (needs `sassc`), not tracked
 - **zellij** — config + gruvbox theme
 - **mise, htop, k9s** — tool configs
 - **GNOME** — keybindings, interface/theme, input sources, extension settings,

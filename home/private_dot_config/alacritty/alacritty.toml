@@ -9,4 +9,4 @@ dynamic_padding = false
 padding = { x = 0, y = 0 }
 
 [general]
-import = ["~/.config/alacritty/gruvbox-dark.toml"]
+import = ["~/.config/alacritty/gruvbox-current.toml"]

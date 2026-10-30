@@ -1,0 +1,22 @@
+/* Gruvbox-Orange (light/dark) theme + sharp-corner overrides.
+   gruvbox-current.css imports the active variant; gruvbox-theme-sync rewrites it. */
+@import url("gruvbox-current.css");
+
+/* Crisp look: zero out corner rounding everywhere */
+window, window.csd, dialog, dialog.csd, .window-frame,
+headerbar, .titlebar,
+popover, popover > arrow, popover > contents, .popup,
+menu, .menu, .context-menu, modelbutton,
+button, entry, entry > text, searchbar > revealer > box, spinbutton,
+.card, frame, list, listview, boxed-list, list > row, row,
+notebook > header > tabs > tab, tabbar tab,
+scale > trough, scale > trough > highlight, scale > trough > slider,
+progressbar > trough, progressbar > trough > progress, levelbar trough, levelbar block,
+check, radio, switch, switch > slider,
+actionbar, toast, banner, infobar, tooltip, .tooltip, .osd,
+scrollbar > range > trough, scrollbar > range > trough > slider,
+textview, treeview, columnview, .view,
+dropdown > button, combobox > box.linked > button,
+toolbarview, .toolbar, statusbar {
+  border-radius: 0;
+}

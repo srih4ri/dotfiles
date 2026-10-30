@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+# Keep the Gruvbox look in step with GNOME's Dark Style toggle
+# (org.gnome.desktop.interface color-scheme). Runs as the systemd user
+# service gruvbox-theme-sync; `gruvbox-theme-sync --once` applies and exits.
+#
+#   prefer-dark          -> Gruvbox-Orange-Dark  + Gruvbox-Dark icons
+#   default/prefer-light -> Gruvbox-Orange-Light + Gruvbox-Light icons
+#
+# Only machine-generated files are written (gruvbox-current.*, ignored by
+# chezmoi), so tracked dotfiles never drift. Kitty needs nothing here: it
+# reads ~/.config/kitty/{light,dark}-theme.auto.conf on its own.
+set -euo pipefail
+
+GTK4_CURRENT="$HOME/.config/gtk-4.0/gruvbox-current.css"
+ALACRITTY_DIR="$HOME/.config/alacritty"
+CLAUDE_SETTINGS="$HOME/.claude/settings.json"
+
+# Write via rename so watchers (Alacritty live reload) see one complete file.
+replace() {
+  local dest=$1 tmp
+  tmp=$(mktemp "$dest.XXXXXX")
+  cat > "$tmp"
+  mv "$tmp" "$dest"
+}
+
+apply() {
+  local scheme mode Mode
+  scheme=$(gsettings get org.gnome.desktop.interface color-scheme | tr -d "'")
+  if [[ $scheme == prefer-dark ]]; then mode=dark Mode=Dark; else mode=light Mode=Light; fi
+  local theme="Gruvbox-Orange-$Mode"
+
+  gsettings set org.gnome.desktop.interface gtk-theme "$theme"
+  gsettings set org.gnome.desktop.interface icon-theme "Gruvbox-$Mode"
+  dconf write /org/gnome/shell/extensions/user-theme/name "'$theme'"
+
+  # GTK4/libadwaita; running GTK4 apps pick this up on restart.
+  echo "@import url(\"file://$HOME/.themes/$theme/gtk-4.0/gtk.css\");" | replace "$GTK4_CURRENT"
+
+  replace "$ALACRITTY_DIR/gruvbox-current.toml" < "$ALACRITTY_DIR/gruvbox-$mode.toml"
+
+  # Claude Code's own palette (colour-blind-friendly variant); its dark
+  # colours are unreadable on the light terminal background. Running
+  # sessions need a restart.
+  if [[ -f $CLAUDE_SETTINGS ]] && command -v jq >/dev/null; then
+    local settings
+    settings=$(jq --arg t "$mode-daltonized" '.theme = $t' "$CLAUDE_SETTINGS") &&
+      printf '%s\n' "$settings" | replace "$CLAUDE_SETTINGS"
+  fi
+
+  echo "color-scheme=$scheme -> $theme"
+}
+
+apply
+[[ ${1:-} == --once ]] && exit 0
+
+gsettings monitor org.gnome.desktop.interface color-scheme | while read -r _; do
+  apply
+done

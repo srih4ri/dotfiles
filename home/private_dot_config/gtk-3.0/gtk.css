@@ -1,0 +1,15 @@
+/* Sharp-corner overrides on top of Gruvbox-Orange-Dark (managed manually, 2026-08) */
+window, .window-frame, decoration,
+headerbar, .titlebar,
+popover, menu, .menu, .context-menu, menuitem,
+button, entry, spinbutton,
+frame, list, row,
+notebook > header > tabs > tab,
+scale trough, scale highlight, scale slider,
+progressbar trough, progressbar progress, levelbar trough, levelbar block,
+check, radio, switch, switch slider,
+actionbar, infobar, tooltip, .tooltip, .osd,
+scrollbar trough, scrollbar slider,
+textview, treeview, .view, combobox button, toolbar, statusbar {
+  border-radius: 0;
+}
