@@ -4,7 +4,7 @@
 # theme for bright, glare-heavy rooms and matches alacritty/gruvbox-daylight.toml.
 # The theme's colours are inlined as literals rather than @define-color names,
 # so they are rewritten with sed. Bump the version below to rebuild.
-# version: 3
+# version: 4
 set -euo pipefail
 
 src="$HOME/.themes/Gruvbox-Orange-Light"
@@ -33,6 +33,11 @@ sed -i -E \
   -e 's/#d8a657/#866001/gI' \
   -e 's/#a9b665/#176e3f/gI' \
   "$tmp"/gtk-3.0/gtk.css "$tmp"/gtk-4.0/gtk.css "$tmp"/gnome-shell/gnome-shell.css
+
+# Top bar: Light's bar is cream at 45% opacity, which rendered black in practice
+# (2026-11-05; an opaque !important value fixed it). Make it solid Daylight bg.
+sed -i -E '/^#panel \{/,/^\}/ s/background-color: rgba\(251, 241, 199, 0\.45\);/background-color: #fffcf2 !important;/' \
+  "$tmp"/gnome-shell/gnome-shell.css
 
 # Accent-coloured SVG assets (shell toggles/checkboxes, GTK scalable assets).
 grep -rlI --include='*.svg' -i 'c35e0a' "$tmp" | xargs -r sed -i 's/#c35e0a/#1a4fa8/gI'
