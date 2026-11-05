@@ -36,6 +36,16 @@ apply() {
   gsettings set org.gnome.desktop.interface icon-theme "Gruvbox-$Mode"
   dconf write /org/gnome/shell/extensions/user-theme/name "'$theme'"
 
+  # AppIndicator tray icons are app-supplied images (often white, made for a
+  # dark bar); the shell theme can't recolour them. Darken them on the light bar.
+  if [[ $mode == light ]]; then
+    dconf write /org/gnome/shell/extensions/appindicator/icon-brightness -0.9
+    dconf write /org/gnome/shell/extensions/appindicator/icon-opacity 255
+  else
+    dconf reset /org/gnome/shell/extensions/appindicator/icon-brightness
+    dconf reset /org/gnome/shell/extensions/appindicator/icon-opacity
+  fi
+
   # GTK4/libadwaita; running GTK4 apps pick this up on restart.
   echo "@import url(\"file://$HOME/.themes/$theme/gtk-4.0/gtk.css\");" | replace "$GTK4_CURRENT"
 

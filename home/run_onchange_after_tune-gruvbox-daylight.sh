@@ -4,7 +4,7 @@
 # theme for bright, glare-heavy rooms and matches alacritty/gruvbox-daylight.toml.
 # The theme's colours are inlined as literals rather than @define-color names,
 # so they are rewritten with sed. Bump the version below to rebuild.
-# version: 4
+# version: 6
 set -euo pipefail
 
 src="$HOME/.themes/Gruvbox-Orange-Light"
@@ -34,10 +34,22 @@ sed -i -E \
   -e 's/#a9b665/#176e3f/gI' \
   "$tmp"/gtk-3.0/gtk.css "$tmp"/gtk-4.0/gtk.css "$tmp"/gnome-shell/gnome-shell.css
 
-# Top bar: Light's bar is cream at 45% opacity, which rendered black in practice
-# (2026-11-05; an opaque !important value fixed it). Make it solid Daylight bg.
+# Top bar: the Ubuntu session (gnome-shell --mode=ubuntu) also loads Yaru's
+# stylesheet, which forces `#panel { background-color: #131313 !important }`
+# and `#panel .system-status-icon { color: #f2f2f2 !important }`. That gave a
+# black bar and near-white icons in light mode. Override both with !important.
 sed -i -E '/^#panel \{/,/^\}/ s/background-color: rgba\(251, 241, 199, 0\.45\);/background-color: #fffcf2 !important;/' \
   "$tmp"/gnome-shell/gnome-shell.css
+# Bar text and symbolic icons take the button colour; 78% alpha looked washed
+# out on the solid bar, so use opaque text there.
+sed -i -E '/^#panel[ .:{]/,/^\}/ s/rgba\(29, 32, 33, 0\.78\)/#1d2021/g' \
+  "$tmp"/gnome-shell/gnome-shell.css
+
+cat >> "$tmp"/gnome-shell/gnome-shell.css <<'CSS'
+
+/* Beat Yaru's !important panel icon colour (Ubuntu session mode). */
+#panel .system-status-icon { color: #1d2021 !important; }
+CSS
 
 # Accent-coloured SVG assets (shell toggles/checkboxes, GTK scalable assets).
 grep -rlI --include='*.svg' -i 'c35e0a' "$tmp" | xargs -r sed -i 's/#c35e0a/#1a4fa8/gI'
