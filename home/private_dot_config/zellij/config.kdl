@@ -593,3 +593,6 @@ show_startup_tips false
 // Note: This only applies to web clients at the moment.
 // client_async_worker_tasks 4
 theme "gruvbox-dark"
+// Follows the host terminal: Alacritty reports light/dark via gruvbox-theme-sync.
+theme_dark "gruvbox-dark"
+theme_light "gruvbox-daylight"

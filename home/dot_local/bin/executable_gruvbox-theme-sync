@@ -4,7 +4,7 @@
 # service gruvbox-theme-sync; `gruvbox-theme-sync --once` applies and exits.
 #
 #   prefer-dark          -> Gruvbox-Orange-Dark  + Gruvbox-Dark icons
-#   default/prefer-light -> Gruvbox-Orange-Light + Gruvbox-Light icons
+#   default/prefer-light -> Gruvbox-Orange-Daylight + Gruvbox-Light icons
 #
 # Only machine-generated files are written (gruvbox-current.*, ignored by
 # chezmoi), so tracked dotfiles never drift. Kitty needs nothing here: it
@@ -27,7 +27,10 @@ apply() {
   local scheme mode Mode
   scheme=$(gsettings get org.gnome.desktop.interface color-scheme | tr -d "'")
   if [[ $scheme == prefer-dark ]]; then mode=dark Mode=Dark; else mode=light Mode=Light; fi
+  # Light mode uses the high-contrast Daylight build (derived from Light by
+  # run_onchange_after_tune-gruvbox-daylight.sh); fall back if it is missing.
   local theme="Gruvbox-Orange-$Mode"
+  [[ $mode == light && -d $HOME/.themes/Gruvbox-Orange-Daylight ]] && theme=Gruvbox-Orange-Daylight
 
   gsettings set org.gnome.desktop.interface gtk-theme "$theme"
   gsettings set org.gnome.desktop.interface icon-theme "Gruvbox-$Mode"
@@ -36,7 +39,20 @@ apply() {
   # GTK4/libadwaita; running GTK4 apps pick this up on restart.
   echo "@import url(\"file://$HOME/.themes/$theme/gtk-4.0/gtk.css\");" | replace "$GTK4_CURRENT"
 
-  replace "$ALACRITTY_DIR/gruvbox-current.toml" < "$ALACRITTY_DIR/gruvbox-$mode.toml"
+  # Light mode uses the high-contrast "daylight" palette; stock gruvbox-light
+  # washes out in a bright office (accents at 2.2-3.7:1 contrast).
+  local palette=$mode
+  [[ $mode == light ]] && palette=daylight
+  replace "$ALACRITTY_DIR/gruvbox-current.toml" < "$ALACRITTY_DIR/gruvbox-$palette.toml"
+
+  # Zellij: running sessions don't re-detect the terminal's colours, so switch
+  # them explicitly (theme_light/theme_dark in config.kdl cover new sessions).
+  if command -v zellij >/dev/null; then
+    local session
+    while read -r session; do
+      zellij -s "$session" action "set-$mode-theme" 2>/dev/null || true
+    done < <(zellij list-sessions --short --no-formatting 2>/dev/null || true)
+  fi
 
   # Claude Code's own palette (colour-blind-friendly variant); its dark
   # colours are unreadable on the light terminal background. Running

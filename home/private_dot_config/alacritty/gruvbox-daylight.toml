@@ -1,0 +1,38 @@
+# Gruvbox Daylight: a high-contrast light palette for bright, glare-heavy rooms,
+# tuned for strong protan (red-green) colour vision. Every accent is at least
+# 5.5:1 against the background in both normal and simulated-protanopia vision
+# (Machado 2009). The closest pair as a protan sees it is deltaE 23.5, where the
+# stock Gruvbox hues gave 4.4 (green and yellow looked identical). Bright = normal
+# on purpose: extra shades would only create pairs that look alike.
+# The background is near-white instead of cream, so the panel outshines reflections.
+[colors.primary]
+background = "#fffcf2"
+foreground = "#1d2021"
+
+[colors.normal]
+black = "#ebdbb2"
+red = "#7c100e"
+green = "#176e3f"
+yellow = "#866001"
+blue = "#0f2261"
+magenta = "#890ca7"
+cyan = "#046281"
+white = "#3c3836"
+
+[colors.bright]
+black = "#57524f"
+red = "#7c100e"
+green = "#176e3f"
+yellow = "#866001"
+blue = "#0f2261"
+magenta = "#890ca7"
+cyan = "#046281"
+white = "#1d2021"
+
+[colors.selection]
+background = "#f2d98a"
+foreground = "#1d2021"
+
+[colors.cursor]
+cursor = "#890ca7"
+text = "#fffcf2"

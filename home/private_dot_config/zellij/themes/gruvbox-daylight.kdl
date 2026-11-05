@@ -1,0 +1,17 @@
+// High-contrast light Gruvbox, matching alacritty/gruvbox-daylight.toml (protan-tuned).
+// Zellij's bars use their own colours, not the terminal's, so they get a theme too.
+themes {
+    gruvbox-daylight {
+        fg "#1d2021"
+        bg "#fffcf2"
+        black "#ebdbb2"
+        red "#7c100e"
+        green "#176e3f"
+        yellow "#866001"
+        blue "#0f2261"
+        magenta "#890ca7"
+        cyan "#046281"
+        white "#1d2021"
+        orange "#af3a03"
+    }
+}
