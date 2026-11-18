@@ -1,4 +1,4 @@
-/* Gruvbox-Orange (light/dark) theme + sharp-corner overrides.
+/* Bauhaus light/dark theme and square control geometry.
    gruvbox-current.css imports the active variant; gruvbox-theme-sync rewrites it. */
 @import url("gruvbox-current.css");
 

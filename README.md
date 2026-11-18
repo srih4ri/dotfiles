@@ -8,13 +8,10 @@ My Linux (GNOME) dotfiles, managed with [chezmoi](https://www.chezmoi.io/).
 - **git** — config (identity templated per machine) and global ignore
 - **tmux** — config + cheatsheet popup
 - **Doom Emacs** — config.el / init.el / packages.el / custom.el
-- **Terminals** — alacritty (+ gruvbox light/dark), kitty (+ gruvbox light/dark auto themes)
-- **Gruvbox light/dark** — GTK3/4 sharp-corner CSS, `gruvbox-theme-sync`
-  (`~/.local/bin`, systemd user service) which follows GNOME's Dark Style
-  toggle and switches GTK/shell theme, icons, Alacritty and Claude Code. The
-  themes themselves are built from upstream by
-  `run_once_after_install-gruvbox-themes.sh` (needs `sassc`), not tracked
-- **zellij** — config + gruvbox theme
+- **Terminals** — Alacritty and Kitty use JetBrains Mono Medium at 11.5 pt with extra line spacing and follow the light/dark palette
+- **Appearance switching** — the `gruvbox-theme-sync` user service follows GNOME Dark Style and selects the Bauhaus GTK, Shell and Alacritty themes, Gruvbox icons and the matching Claude Code theme.
+- **Bauhaus desktop** — light/dark GNOME Shell, Alacritty, Kitty and Zellij palettes, flat tabs, cobalt focus and a 2880 × 1920 light wallpaper. The panel and headings use URW Gothic. Inter is the interface and document face. Rehear transcripts use 12 pt Inter with 1.45 line height. Quick Settings uses cobalt enabled tiles and native GNOME corner shapes. GTK3 and GTK4 share the shell palette, ruled headers and cobalt selections over GTK’s built-in widget styles.
+- **Codex CLI** — the chezmoi modifier sets the ANSI syntax theme with `uv` and `tomlkit`, preserving the rest of the local config.
 - **mise, htop, k9s** — tool configs
 - **GNOME** — keybindings, interface/theme, input sources, extension settings,
   captured as dconf dumps in `home/.dconf/gnome/` and loaded automatically by a

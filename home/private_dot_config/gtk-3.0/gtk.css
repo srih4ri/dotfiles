@@ -1,4 +1,4 @@
-/* Sharp-corner overrides on top of Gruvbox-Orange-Dark (managed manually, 2026-08) */
+/* Square control geometry for GTK3 apps. */
 window, .window-frame, decoration,
 headerbar, .titlebar,
 popover, menu, .menu, .context-menu, menuitem,

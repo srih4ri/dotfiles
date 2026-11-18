@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2880" height="1920" viewBox="0 0 2880 1920">
+  <title>Study in primary forms</title>
+  <rect width="2880" height="1920" fill="#f4efe3"/>
+  <circle cx="1872" cy="672" r="336" fill="#c5482d"/>
+  <path d="M1200 1008h672v672z" fill="#194baf"/>
+  <path d="M1872 1008h672a672 672 0 0 1-672 672z" fill="#eabd41"/>
+  <g fill="#202225">
+    <path d="M1192 576h16v1200h-16zM1008 1000h1632v16H1008z"/>
+    <path d="M2160 384h288v24h-288zM2160 432h288v24h-288zM2160 480h288v24h-288z"/>
+  </g>
+</svg>

@@ -1,0 +1,29 @@
+{{- $c := .colors -}}
+{{- $base := dict "frame_selected" $c.normal.blue "frame_highlight" $c.normal.red
+                  "exit_code_success" $c.normal.green "exit_code_error" $c.normal.red -}}
+{{- $background := dict "ribbon_unselected" .band "text_unselected" .band
+                        "text_selected" $c.selection.background -}}
+themes {
+    {{ .name }} {
+        {{- range $group := list "text_unselected" "text_selected" "ribbon_unselected" "table_title" "table_cell_unselected" "list_unselected" "frame_selected" "frame_highlight" "exit_code_success" "exit_code_error" }}
+        {{ $group }} {
+            base "{{ get $base $group | default $c.primary.foreground }}"
+            background "{{ get $background $group | default $c.primary.background }}"
+            emphasis_0 "{{ $c.normal.red }}"
+            emphasis_1 "{{ $c.normal.blue }}"
+            emphasis_2 "{{ $c.normal.green }}"
+            emphasis_3 "{{ $c.normal.magenta }}"
+        }
+        {{- end }}
+        {{- range $group := list "ribbon_selected" "table_cell_selected" "list_selected" }}
+        {{ $group }} {
+            base "#ffffff"
+            background "#194baf"
+            emphasis_0 "#ffdf72"
+            emphasis_1 "#ffffff"
+            emphasis_2 "#ffdf72"
+            emphasis_3 "#ffffff"
+        }
+        {{- end }}
+    }
+}

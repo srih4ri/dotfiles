@@ -1,0 +1,115 @@
+{{- $c := .colors -}}
+/* Shared Bauhaus surfaces and interaction states. Keep the base widget metrics. */
+@define-color bauhaus_paper {{ $c.primary.background }};
+@define-color bauhaus_ink {{ $c.primary.foreground }};
+@define-color bauhaus_band {{ if .dark }}#303338{{ else }}#e9e5da{{ end }};
+@define-color bauhaus_muted {{ $c.bright.black }};
+@define-color bauhaus_focus {{ $c.normal.blue }};
+@define-color bauhaus_cobalt #194baf;
+@define-color bauhaus_signal #a32f1d;
+@define-color accent_bg_color @bauhaus_cobalt;
+@define-color accent_fg_color white;
+@define-color accent_color @bauhaus_focus;
+@define-color theme_selected_bg_color @bauhaus_cobalt;
+@define-color theme_selected_fg_color white;
+{{ if eq .version 4 }}
+/* libadwaita widgets use CSS custom properties on current GTK4. */
+:root {
+  --window-bg-color: @bauhaus_paper;
+  --window-fg-color: @bauhaus_ink;
+  --view-bg-color: @bauhaus_paper;
+  --view-fg-color: @bauhaus_ink;
+  --headerbar-bg-color: @bauhaus_paper;
+  --headerbar-fg-color: @bauhaus_ink;
+  --sidebar-bg-color: @bauhaus_band;
+  --sidebar-fg-color: @bauhaus_ink;
+  --card-bg-color: @bauhaus_band;
+  --card-fg-color: @bauhaus_ink;
+  --dialog-bg-color: @bauhaus_paper;
+  --dialog-fg-color: @bauhaus_ink;
+  --popover-bg-color: @bauhaus_paper;
+  --popover-fg-color: @bauhaus_ink;
+  --accent-bg-color: @bauhaus_cobalt;
+  --accent-color: @bauhaus_focus;
+  --accent-fg-color: white;
+  --destructive-bg-color: @bauhaus_signal;
+  --destructive-fg-color: white;
+}
+
+/* Rehear uses wrapped labels for transcripts, one per speaker turn. */
+.cue-row .cue-text {
+  font-family: "Inter Variable", sans-serif;
+  font-size: 12pt;
+  line-height: 1.45;
+  color: @bauhaus_ink;
+}
+
+.cue-row:selected .cue-text {
+  color: white;
+}
+
+.cue-row {
+  padding: 8px 12px;
+}
+{{ end }}
+window.background, dialog.background, .view, textview text {
+  background-color: @bauhaus_paper;
+  color: @bauhaus_ink;
+}
+
+entry:not(:disabled) {
+  background-image: none;
+  background-color: @bauhaus_band;
+  color: @bauhaus_ink;
+}
+
+headerbar, headerbar:backdrop {
+  background-image: none;
+  background-color: @bauhaus_paper;
+  color: @bauhaus_ink;
+  box-shadow: none;
+  border-bottom: 2px solid @bauhaus_focus;
+}
+
+headerbar .title, headerbar .heading {
+  font-family: "URW Gothic", sans-serif;
+  font-weight: 600;
+}
+
+.sidebar, placessidebar, .navigation-sidebar, .card, popover > contents {
+  background-color: @bauhaus_band;
+  color: @bauhaus_ink;
+}
+
+.sidebar row:selected, .navigation-sidebar row:selected, row:selected,
+selection, textview text selection, entry selection,
+button.suggested-action:not(:disabled), button.toggle:checked:not(:disabled) {
+  background-image: none;
+  background-color: @bauhaus_cobalt;
+  color: white;
+}
+
+button.destructive-action:not(:disabled) {
+  background-image: none;
+  background-color: @bauhaus_signal;
+  color: white;
+}
+
+button.suggested-action:hover:not(:disabled), button.destructive-action:hover:not(:disabled) {
+  box-shadow: inset 0 -2px white;
+}
+
+button.suggested-action:disabled, button.destructive-action:disabled {
+  background-color: @bauhaus_band;
+  color: @bauhaus_muted;
+  background-image: none;
+}
+
+button:focus{{ if eq .version 4 }}-visible{{ end }}, entry:focus{{ if eq .version 4 }}-within{{ end }} {
+  outline: 2px solid @bauhaus_focus;
+  outline-offset: 1px;
+}
+
+notebook > header > tabs > tab:checked {
+  box-shadow: inset 0 -3px @bauhaus_focus;
+}

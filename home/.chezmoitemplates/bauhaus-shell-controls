@@ -1,0 +1,62 @@
+{{- $c := .colors -}}
+{{- $surface := .band -}}
+{{- $hover := .hover -}}
+/* GNOME supplies shape and layout. Use the desktop palette for Shell chrome. */
+.popup-menu .popup-menu-content, .quick-settings, .osd-window, .switcher-list {
+  background-color: {{ $c.primary.background }} !important;
+  color: {{ $c.primary.foreground }} !important;
+  border: 1px solid {{ $c.bright.black }};
+  font-family: "Inter Variable", sans-serif;
+}
+
+.quick-settings .quick-toggle, .quick-settings .icon-button,
+.quick-settings .power-item, .quick-settings .quick-toggle-menu-button,
+.quick-settings .quick-toggle-menu, .quick-toggle-menu .header .icon {
+  background-color: {{ $surface }} !important;
+  color: {{ $c.primary.foreground }} !important;
+}
+
+.quick-settings .quick-toggle:hover, .quick-settings .icon-button:hover,
+.quick-settings .power-item:hover, .quick-settings .quick-toggle-menu-button:hover,
+.quick-settings .quick-toggle:active, .quick-settings .icon-button:active,
+.quick-settings .power-item:active, .quick-settings .quick-toggle-menu-button:active,
+.quick-settings .quick-toggle-menu .popup-menu-item:hover,
+.quick-settings .quick-toggle-menu .popup-menu-item:focus {
+  background-color: {{ $hover }} !important;
+  color: {{ $c.primary.foreground }} !important;
+}
+
+.quick-settings .quick-toggle:checked, .quick-settings .quick-toggle-menu-button:checked,
+.quick-settings .quick-toggle-menu .header .icon.active, .calendar .calendar-today {
+  background-color: #194baf !important;
+  color: #ffffff !important;
+}
+
+.quick-settings .quick-toggle:checked:hover, .quick-settings .quick-toggle-menu-button:checked:hover,
+.quick-settings .quick-toggle:checked:active, .quick-settings .quick-toggle-menu-button:checked:active,
+.calendar .calendar-today:hover {
+  background-color: #285bc3 !important;
+  color: #ffffff !important;
+}
+
+.quick-settings .quick-toggle:focus, .quick-settings .icon-button:focus,
+.quick-settings .power-item:focus, .quick-settings .slider-bin:focus {
+  box-shadow: inset 0 0 0 2px {{ $c.normal.blue }} !important;
+}
+
+.quick-settings .quick-toggle:checked:focus, .quick-settings .quick-toggle-menu-button:checked:focus {
+  box-shadow: inset 0 0 0 2px #ffffff !important;
+}
+
+.quick-settings .quick-toggle:insensitive, .quick-settings .icon-button:insensitive {
+  background-color: {{ $surface }} !important;
+  color: {{ $c.bright.black }} !important;
+}
+
+.quick-settings .slider, .osd-window .level {
+  color: {{ $c.primary.foreground }};
+  -barlevel-background-color: {{ $hover }};
+  -barlevel-active-background-color: {{ $c.normal.blue }};
+  -barlevel-overdrive-color: {{ $c.normal.red }};
+  -slider-handle-border-color: {{ $c.primary.foreground }};
+}

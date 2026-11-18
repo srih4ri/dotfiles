@@ -4,7 +4,6 @@
 # Skips anything already installed. Needs git and sassc.
 #
 # Pinned upstream: https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme
-# Shell theme gets every border-radius zeroed (sharp corners).
 
 set -euo pipefail
 
@@ -33,8 +32,6 @@ if [ "$need_build" = 1 ]; then
     for v in Dark Light; do
         if [ ! -d "$THEMES/Gruvbox-Orange-$v" ]; then
             (cd "$src/themes" && ./install.sh -d "$THEMES" -t orange -c "${v,,}")
-            sed -i -E 's/border-radius:[^;]*;/border-radius: 0;/g' \
-                "$THEMES/Gruvbox-Orange-$v/gnome-shell/gnome-shell.css"
         fi
         if [ ! -d "$ICONS/Gruvbox-$v" ]; then
             cp -r "$src/icons/Gruvbox-$v" "$ICONS/"

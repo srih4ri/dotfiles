@@ -1,8 +1,9 @@
 
 [font]
 normal = { family = "JetBrainsMono Nerd Font Mono", style = "Medium" }
-bold = { family = "JetBrainsMono Nerd Font Mono", style = "ExtraBold" }
-size = 11
+bold = { family = "JetBrainsMono Nerd Font Mono", style = "Bold" }
+size = 11.5
+offset = { x = 0, y = 2 }
 
 [window]
 decorations = "None"

@@ -1,0 +1,25 @@
+@import url("bauhaus-controls.css");
+
+#panel {
+  font-family: "URW Gothic", sans-serif;
+  font-weight: 600;
+  background-color: #fffcf2 !important;
+  border-bottom: 1px solid #1d2021;
+}
+
+#panel .panel-button, #panel .system-status-icon {
+  color: #1d2021 !important;
+}
+
+#panel .panel-button#panelActivities {
+  background-color: #194baf;
+}
+
+#panel .panel-button#panelActivities .workspace-dot {
+  background-color: #ffffff !important;
+}
+
+#panel .panel-button.clock-display .clock {
+  border-bottom: 2px solid #b43b23;
+  padding: 0 8px;
+}
