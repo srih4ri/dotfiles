@@ -4,7 +4,7 @@
 #panel {
   font-family: "URW Gothic", sans-serif;
   font-weight: 600;
-  background-color: #191b1e !important;
+  background-color: rgba(25, 27, 30, 0.92) !important;
   border-bottom: 1px solid rgba(245, 241, 230, 0.10);
   box-shadow: none;
 }

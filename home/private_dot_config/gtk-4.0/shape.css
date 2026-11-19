@@ -60,7 +60,7 @@ spinbutton > progress > trough > progress, entry > progress > trough > progress 
 expander-widget > box > title { border-radius: 6px; }
 button.sidebar-button { border-radius: 100%; }
 filechooser gridview > child { border-radius: 6px; }
-windowcontrols > button > image { border-radius: 100%; }
+windowcontrols > button > image { border-radius: 6px; }
 .accent-color-row color { border-radius: 6px; }
 adaptive-preview .device-view { border-radius: var(--top-device-corner-radius) var(--top-device-corner-radius) var(--bottom-device-corner-radius) var(--bottom-device-corner-radius); }
 adaptive-preview .device-view.custom { border-radius: 0; }

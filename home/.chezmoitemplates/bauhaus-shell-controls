@@ -1,19 +1,20 @@
 {{- $c := .colors -}}
 {{- $surface := .band -}}
 {{- $hover := .hover -}}
-/* shape.css sets the corners. Use the desktop palette for Shell chrome. */
+/* shape.css sets the corners. Popups are a tone off the desktop surface and
+   slightly see-through, with no shadow or outline. Use the desktop palette for Shell chrome. */
 .popup-menu .popup-menu-content, .quick-settings, .osd-window, .switcher-list {
-  background-color: {{ $c.primary.background }} !important;
+  background-color: {{ .popup }} !important;
   color: {{ $c.primary.foreground }} !important;
   border: none;
-  box-shadow: 0 4px 14px 0 {{ .shadow }};
+  box-shadow: none;
   font-family: "Inter Variable", sans-serif;
 }
 
 .quick-settings .quick-toggle, .quick-settings .icon-button,
 .quick-settings .power-item, .quick-settings .quick-toggle-menu-button,
 .quick-settings .quick-toggle-menu, .quick-toggle-menu .header .icon {
-  background-color: {{ $surface }} !important;
+  background-color: {{ $hover }} !important;
   color: {{ $c.primary.foreground }} !important;
 }
 
@@ -23,7 +24,7 @@
 .quick-settings .power-item:active, .quick-settings .quick-toggle-menu-button:active,
 .quick-settings .quick-toggle-menu .popup-menu-item:hover,
 .quick-settings .quick-toggle-menu .popup-menu-item:focus {
-  background-color: {{ $hover }} !important;
+  background-color: {{ .press }} !important;
   color: {{ $c.primary.foreground }} !important;
 }
 
@@ -50,13 +51,13 @@
 }
 
 .quick-settings .quick-toggle:insensitive, .quick-settings .icon-button:insensitive {
-  background-color: {{ $surface }} !important;
+  background-color: {{ $hover }} !important;
   color: {{ $c.bright.black }} !important;
 }
 
 .quick-settings .slider, .osd-window .level {
   color: {{ $c.primary.foreground }};
-  -barlevel-background-color: {{ $hover }};
+  -barlevel-background-color: {{ .press }};
   -barlevel-active-background-color: {{ $c.normal.blue }};
   -barlevel-overdrive-color: {{ $c.normal.red }};
   -slider-handle-border-color: {{ $c.primary.foreground }};
@@ -69,7 +70,7 @@
 }
 
 .switcher-list .item-box:hover {
-  background-color: {{ $surface }} !important;
+  background-color: {{ $hover }} !important;
 }
 
 .switcher-list .item-box:selected, .switcher-list .item-box:highlighted,
@@ -83,7 +84,7 @@
 }
 
 .switcher-list .separator {
-  background-color: {{ $hover }};
+  background-color: {{ .press }};
 }
 
 .switcher-arrow, .switcher-arrow:highlighted {

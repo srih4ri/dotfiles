@@ -19,7 +19,7 @@ LIB = "/usr/lib/x86_64-linux-gnu"
 # Selectors that stay as the toolkit draws them.
 GTK_ROUND = re.compile(
     r"circular|avatar|radio|switch|slider|scale|progress|levelbar|scrollbar|indicator"
-    r"|drag-handle|windowcontrols|\.close|cursor-handle|sidebar-button|titlebutton"
+    r"|drag-handle|\.close|cursor-handle|sidebar-button"
     r"|selection-mode|image-button|tabthumbnail button|colorswatch|adaptive-preview"
     r"|\bcheck\b|video ")
 SHELL_ROUND = re.compile(
