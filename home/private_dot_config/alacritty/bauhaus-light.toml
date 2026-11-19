@@ -1,5 +1,5 @@
 [colors.primary]
-background = "#fffcf2"
+background = "#f8f8f5"
 foreground = "#1d2021"
 
 [colors.normal]
@@ -28,4 +28,4 @@ foreground = "#1d2021"
 
 [colors.cursor]
 cursor = "#194baf"
-text = "#fffcf2"
+text = "#f8f8f5"

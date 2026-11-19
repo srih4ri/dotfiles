@@ -1,11 +1,12 @@
 {{- $c := .colors -}}
 {{- $surface := .band -}}
 {{- $hover := .hover -}}
-/* GNOME supplies shape and layout. Use the desktop palette for Shell chrome. */
+/* shape.css sets the corners. Use the desktop palette for Shell chrome. */
 .popup-menu .popup-menu-content, .quick-settings, .osd-window, .switcher-list {
   background-color: {{ $c.primary.background }} !important;
   color: {{ $c.primary.foreground }} !important;
-  border: 1px solid {{ $c.bright.black }};
+  border: none;
+  box-shadow: 0 4px 14px 0 {{ .shadow }};
   font-family: "Inter Variable", sans-serif;
 }
 
@@ -59,4 +60,33 @@
   -barlevel-active-background-color: {{ $c.normal.blue }};
   -barlevel-overdrive-color: {{ $c.normal.red }};
   -slider-handle-border-color: {{ $c.primary.foreground }};
+}
+
+/* Yaru styles the switcher for a dark panel: white labels, white selection. */
+.switcher-list .item-box, .switcher-list .item-box:hover,
+.switcher-list .item-box:focus, .switcher-list .item-box:active {
+  color: {{ $c.primary.foreground }} !important;
+}
+
+.switcher-list .item-box:hover {
+  background-color: {{ $surface }} !important;
+}
+
+.switcher-list .item-box:selected, .switcher-list .item-box:highlighted,
+.switcher-list .item-box:checked, .switcher-list .item-box:selected:hover {
+  background-color: #194baf !important;
+  color: #ffffff !important;
+}
+
+.switcher-list .item-box:insensitive {
+  color: {{ $c.bright.black }} !important;
+}
+
+.switcher-list .separator {
+  background-color: {{ $hover }};
+}
+
+.switcher-arrow, .switcher-arrow:highlighted {
+  border-color: {{ $c.primary.foreground }};
+  color: {{ $c.primary.foreground }};
 }
