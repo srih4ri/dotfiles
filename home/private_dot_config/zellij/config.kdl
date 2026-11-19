@@ -592,7 +592,7 @@ show_startup_tips false
 // typically work best. Set to 0 to use the number of (physical) CPU cores.
 // Note: This only applies to web clients at the moment.
 // client_async_worker_tasks 4
-theme "bauhaus-dark"
+theme "iceberg-dark"
 // Follows the host terminal: Alacritty reports light/dark via gruvbox-theme-sync.
-theme_dark "bauhaus-dark"
-theme_light "bauhaus-light"
+theme_dark "iceberg-dark"
+theme_light "iceberg-light"
