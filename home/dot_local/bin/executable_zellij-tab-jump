@@ -1,0 +1,89 @@
+#!/usr/bin/env python3
+import curses
+import datetime
+import os
+import subprocess
+import traceback
+
+LOG = os.path.expanduser("~/.local/state/zellij-tab-jump.log")
+
+
+def log(msg):
+    os.makedirs(os.path.dirname(LOG), exist_ok=True)
+    with open(LOG, "a") as f:
+        f.write(f"{datetime.datetime.now():%F %T} {msg}\n")
+
+
+def tab_names():
+    out = subprocess.run(
+        ["zellij", "action", "query-tab-names"], capture_output=True, text=True
+    ).stdout
+    return [n for n in out.splitlines() if n.strip()]
+
+
+def score(query, name):
+    q, n = query.lower(), name.lower()
+    if not q:
+        return 0
+    if n.startswith(q):
+        return 3
+    if q in n:
+        return 2
+    it = iter(n)
+    return 1 if all(c in it for c in q) else -1
+
+
+def pick(stdscr, names):
+    curses.curs_set(1)
+    curses.use_default_colors()
+    query, sel = "", 0
+    while True:
+        matches = sorted(
+            (m for m in names if score(query, m) >= 0),
+            key=lambda m: -score(query, m),
+        )
+        sel = max(0, min(sel, len(matches) - 1))
+        stdscr.erase()
+        h, w = stdscr.getmaxyx()
+        for i, m in enumerate(matches[: h - 1]):
+            stdscr.addnstr(i + 1, 0, ("> " if i == sel else "  ") + m, w - 1,
+                           curses.A_REVERSE if i == sel else 0)
+        stdscr.addnstr(0, 0, "tab: " + query, w - 1)
+        stdscr.refresh()
+        k = stdscr.get_wch()
+        if k in ("\n", "\r", curses.KEY_ENTER):
+            return matches[sel] if matches else None
+        if k == "\x1b":
+            return None
+        if k in (curses.KEY_UP, "\x10", "\x0b"):
+            sel -= 1
+        elif k in (curses.KEY_DOWN, "\x0e", "\t"):
+            sel += 1
+        elif k in (curses.KEY_BACKSPACE, "\x7f", "\x08"):
+            query, sel = query[:-1], 0
+        elif k == "\x15":
+            query, sel = "", 0
+        elif isinstance(k, str) and k.isprintable():
+            query, sel = query + k, 0
+
+
+def main():
+    names = tab_names()
+    if not names:
+        return
+    log(f"tabs={len(names)}")
+    choice = curses.wrapper(pick, names)
+    log(f"choice={choice!r}")
+    if choice:
+        r = subprocess.run(["zellij", "action", "go-to-tab-name", choice],
+                           capture_output=True, text=True)
+        log(f"go-to-tab-name rc={r.returncode} err={r.stderr.strip()!r}")
+
+
+if __name__ == "__main__":
+    log(f"start session={os.environ.get('ZELLIJ_SESSION_NAME')}")
+    try:
+        main()
+    except Exception:
+        log(traceback.format_exc())
+        raise
