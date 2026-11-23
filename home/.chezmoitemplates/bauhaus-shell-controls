@@ -8,7 +8,7 @@
   color: {{ $c.primary.foreground }} !important;
   border: none;
   box-shadow: none;
-  font-family: "Inter Variable", sans-serif;
+  font-family: "Atkinson Hyperlegible Next", sans-serif;
 }
 
 .quick-settings .quick-toggle, .quick-settings .icon-button,

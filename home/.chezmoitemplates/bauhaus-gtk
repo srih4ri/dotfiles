@@ -2,7 +2,7 @@
 /* Shared Bauhaus surfaces and interaction states. Keep the base widget metrics. */
 @define-color bauhaus_paper {{ $c.primary.background }};
 @define-color bauhaus_ink {{ $c.primary.foreground }};
-@define-color bauhaus_band {{ if .dark }}#303338{{ else }}#e9e9e4{{ end }};
+@define-color bauhaus_band {{ if .dark }}#303338{{ else }}#ececec{{ end }};
 @define-color bauhaus_muted {{ $c.bright.black }};
 @define-color bauhaus_focus {{ $c.normal.blue }};
 @define-color bauhaus_cobalt #194baf;
@@ -38,7 +38,7 @@
 
 /* Rehear uses wrapped labels for transcripts, one per speaker turn. */
 .cue-row .cue-text {
-  font-family: "Inter Variable", sans-serif;
+  font-family: "Atkinson Hyperlegible Next", sans-serif;
   font-size: 12pt;
   line-height: 1.45;
   color: @bauhaus_ink;
@@ -72,7 +72,7 @@ headerbar, headerbar:backdrop {
 }
 
 headerbar .title, headerbar .heading {
-  font-family: "URW Gothic", sans-serif;
+  font-family: "Atkinson Hyperlegible Next", sans-serif;
   font-weight: 600;
 }
 

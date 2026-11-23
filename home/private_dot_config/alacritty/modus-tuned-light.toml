@@ -1,0 +1,37 @@
+# Modus Operandi, accents adjusted (2026-11-23): hue kept, lightness/chroma moved so
+# every accent stays separable under simulated protanopia (Machado 2009,
+# CAM02-UCS dE >= 14) and readable on the background. Normal = bright.
+# Background, text, black/white, cursor and selection are stock.
+# Picked with `term-look palette <name>`; dark mode falls back to the stock dark file.
+
+[colors.bright]
+black = '#595959'
+blue = '#0031a9'
+cyan = '#1e587e'
+green = '#255f44'
+magenta = '#721045'
+red = '#990101'
+white = '#595959'
+yellow = '#6f5500'
+
+[colors.cursor]
+cursor = '#000000'
+text = '#fafafa'
+
+[colors.normal]
+black = '#000000'
+blue = '#0031a9'
+cyan = '#1e587e'
+green = '#255f44'
+magenta = '#721045'
+red = '#990101'
+white = '#a6a6a6'
+yellow = '#6f5500'
+
+[colors.primary]
+background = '#fafafa'
+foreground = '#000000'
+
+[colors.selection]
+background = '#bdbdbd'
+text = '#000000'

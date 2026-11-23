@@ -1,0 +1,37 @@
+# Iceberg Light, accents adjusted (2026-11-23): hue kept, lightness/chroma moved so
+# every accent stays separable under simulated protanopia (Machado 2009,
+# CAM02-UCS dE >= 14) and readable on the background. Normal = bright.
+# Background, text, black/white, cursor and selection are stock.
+# Picked with `term-look palette <name>`; dark mode falls back to the stock dark file.
+
+[colors.bright]
+black = '#8389a3'
+blue = '#2d539e'
+cyan = '#2f5d71'
+green = '#4e630b'
+magenta = '#4f2a72'
+red = '#a91345'
+white = '#262a3f'
+yellow = '#7b513e'
+
+[colors.cursor]
+cursor = '#33374c'
+text = '#e8e9ec'
+
+[colors.normal]
+black = '#dcdfe7'
+blue = '#2d539e'
+cyan = '#2f5d71'
+green = '#4e630b'
+magenta = '#4f2a72'
+red = '#a91345'
+white = '#33374c'
+yellow = '#7b513e'
+
+[colors.primary]
+background = '#e8e9ec'
+foreground = '#33374c'
+
+[colors.selection]
+background = '#33374c'
+text = '#e8e9ec'

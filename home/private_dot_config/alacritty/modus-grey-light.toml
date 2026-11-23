@@ -1,0 +1,36 @@
+# Modus Operandi (accents as modus-tuned) on mid-light grey #cccccc, chosen
+# by eye 2026-11-23 ("Casio watch" look). Selection is light cobalt because
+# the stock #bdbdbd vanishes on this grey. Contrast on #cccccc: text 13.1:1,
+# blue/magenta/red 5.5-7.0, green/cyan 4.7-4.8, yellow and dim 4.4.
+# Picked with `term-look palette modus-grey`; dark mode uses modus-dark.
+[colors.bright]
+black = '#595959'
+blue = '#0031a9'
+cyan = '#1e587e'
+green = '#255f44'
+magenta = '#721045'
+red = '#990101'
+white = '#595959'
+yellow = '#6f5500'
+
+[colors.cursor]
+cursor = '#000000'
+text = '#cccccc'
+
+[colors.normal]
+black = '#000000'
+blue = '#0031a9'
+cyan = '#1e587e'
+green = '#255f44'
+magenta = '#721045'
+red = '#990101'
+white = '#a6a6a6'
+yellow = '#6f5500'
+
+[colors.primary]
+background = '#cccccc'
+foreground = '#000000'
+
+[colors.selection]
+background = '#9fb4dc'
+text = '#000000'

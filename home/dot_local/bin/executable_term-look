@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+# Try terminal palettes and fonts live in Alacritty (it reloads on change).
+#
+#   term-look                  show current choice, options, and colour swatches
+#   term-look palette <name>   modus-grey (default) | modus-tuned | modus | iceberg | iceberg-tuned | bauhaus
+#   term-look font <name>      atkinson-light (default) | atkinson | jetbrains
+#   term-look swatch           print the 16 ANSI colours and sample text
+#
+# The palette name is remembered in ~/.config/alacritty/palette, so the
+# light/dark switch (gruvbox-theme-sync) keeps using it.
+set -euo pipefail
+DIR="$HOME/.config/alacritty"
+
+replace() { local tmp; tmp=$(mktemp "$1.XXXXXX"); cat > "$tmp"; mv "$tmp" "$1"; }
+
+palettes() { ls "$DIR" | sed -n -E 's/^(.*)-light\.toml$/\1/p' | grep -v -E '^gruvbox' ; }
+fonts()    { ls "$DIR" | sed -n -E 's/^font-(.*)\.toml$/\1/p' | grep -v '^current$'; }
+
+swatch() {
+  local names=(black red green yellow blue magenta cyan white) i
+  printf '\n'
+  for i in 0 1 2 3 4 5 6 7; do
+    printf '  %-8s \e[3%dm■■■ normal text\e[0m  \e[9%dm■■■ bright text\e[0m  \e[1;3%dmbold\e[0m  \e[4%dm  \e[0m\e[10%dm  \e[0m\n' \
+      "${names[$i]}" "$i" "$i" "$i" "$i" "$i"
+  done
+  printf '\n  \e[32m+ added line\e[0m   \e[31m- removed line\e[0m   \e[33mwarning:\e[0m text   \e[34mdir/\e[0m \e[36mlink\e[0m \e[35m@tag\e[0m \e[90mdim comment\e[0m\n'
+  printf '  Il1| O0o {}[]() => != <= -- ~~ ::  rnm vs rn m  ,.;:  "quotes" `ticks`\n\n'
+}
+
+status() {
+  local p=bauhaus f=?
+  [[ -s $DIR/palette ]] && p=$(<"$DIR/palette")
+  [[ -f $DIR/font-current.toml ]] && f=$(sed -n -E 's/^normal = \{ family = "([^"]*)".*/\1/p' "$DIR/font-current.toml")
+  echo "palette: $p   font: $f"
+  echo "palettes: $(palettes | tr '\n' ' ')"
+  echo "fonts:    $(fonts | tr '\n' ' ')"
+}
+
+case ${1:-} in
+  palette)
+    name=${2:?palette name}
+    [[ -f $DIR/$name-light.toml ]] || { echo "no $DIR/$name-light.toml"; status; exit 1; }
+    echo "$name" | replace "$DIR/palette"
+    gruvbox-theme-sync --once >/dev/null
+    status; swatch ;;
+  font)
+    name=${2:?font name}
+    [[ -f $DIR/font-$name.toml ]] || { echo "no $DIR/font-$name.toml"; status; exit 1; }
+    replace "$DIR/font-current.toml" < "$DIR/font-$name.toml"
+    status; swatch ;;
+  swatch) swatch ;;
+  '') status; swatch ;;
+  *) sed -n '2,10p' "$0"; exit 1 ;;
+esac

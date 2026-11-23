@@ -2,7 +2,7 @@
 @import url("bauhaus-controls.css");
 
 #panel {
-  font-family: "URW Gothic", sans-serif;
+  font-family: "Atkinson Hyperlegible Next", sans-serif;
   font-weight: 600;
   background-color: rgba(25, 27, 30, 0.92) !important;
   border-bottom: 1px solid rgba(245, 241, 230, 0.10);
