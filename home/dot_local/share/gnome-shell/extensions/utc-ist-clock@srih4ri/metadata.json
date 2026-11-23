@@ -1,0 +1,7 @@
+{
+  "uuid": "utc-ist-clock@srih4ri",
+  "name": "UTC + IST Clock",
+  "description": "Shows UTC and India time next to the top bar clock.",
+  "shell-version": ["50"],
+  "url": "https://github.com/srih4ri/dotfiles"
+}
