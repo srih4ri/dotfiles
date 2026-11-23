@@ -1,0 +1,34 @@
+#!/bin/sh
+# Load GNOME settings from the dconf dumps in .dconf/gnome/.
+# The hashes below make chezmoi re-run this script whenever a dump changes.
+#
+# desktop-wm.ini hash: {{ include ".dconf/gnome/desktop-wm.ini" | sha256sum }}
+# desktop-interface.ini hash: {{ include ".dconf/gnome/desktop-interface.ini" | sha256sum }}
+# desktop-peripherals.ini hash: {{ include ".dconf/gnome/desktop-peripherals.ini" | sha256sum }}
+# desktop-input-sources.ini hash: {{ include ".dconf/gnome/desktop-input-sources.ini" | sha256sum }}
+# media-keys.ini hash: {{ include ".dconf/gnome/media-keys.ini" | sha256sum }}
+# mutter.ini hash: {{ include ".dconf/gnome/mutter.ini" | sha256sum }}
+# shell-keybindings.ini hash: {{ include ".dconf/gnome/shell-keybindings.ini" | sha256sum }}
+# shell-extensions.ini hash: {{ include ".dconf/gnome/shell-extensions.ini" | sha256sum }}
+# shell-enabled-extensions.ini hash: {{ include ".dconf/gnome/shell-enabled-extensions.ini" | sha256sum }}
+
+set -e
+
+if ! command -v dconf >/dev/null 2>&1; then
+    echo "dconf not found; skipping GNOME settings load"
+    exit 0
+fi
+
+src="{{ .chezmoi.sourceDir }}/.dconf/gnome"
+
+dconf load /org/gnome/desktop/wm/ < "$src/desktop-wm.ini"
+dconf load /org/gnome/desktop/interface/ < "$src/desktop-interface.ini"
+dconf load /org/gnome/desktop/peripherals/ < "$src/desktop-peripherals.ini"
+dconf load /org/gnome/desktop/input-sources/ < "$src/desktop-input-sources.ini"
+dconf load /org/gnome/settings-daemon/plugins/media-keys/ < "$src/media-keys.ini"
+dconf load /org/gnome/mutter/ < "$src/mutter.ini"
+dconf load /org/gnome/shell/keybindings/ < "$src/shell-keybindings.ini"
+dconf load /org/gnome/shell/extensions/ < "$src/shell-extensions.ini"
+dconf load /org/gnome/shell/ < "$src/shell-enabled-extensions.ini"
+
+echo "GNOME dconf settings loaded"

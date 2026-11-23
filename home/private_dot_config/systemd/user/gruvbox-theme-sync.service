@@ -1,0 +1,12 @@
+[Unit]
+Description=Sync Gruvbox GTK/shell/icon/terminal theme with GNOME Dark Style
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+ExecStart=%h/.local/bin/gruvbox-theme-sync
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=graphical-session.target

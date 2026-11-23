@@ -1,0 +1,12 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# dependencies = ["tomlkit==0.15.2"]
+# ///
+"""Use the terminal palette for Codex while preserving machine-local settings."""
+import sys
+
+import tomlkit
+
+config = tomlkit.parse(sys.stdin.read())
+config.setdefault("tui", tomlkit.table())["theme"] = "ansi"
+sys.stdout.write(tomlkit.dumps(config))

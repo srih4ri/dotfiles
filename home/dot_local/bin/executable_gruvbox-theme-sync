@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+# Keep the Bauhaus desktop in step with GNOME's Dark Style toggle
+# (org.gnome.desktop.interface color-scheme). Runs as the systemd user
+# service gruvbox-theme-sync; `gruvbox-theme-sync --once` applies and exits.
+#
+#   prefer-dark          -> Bauhaus-Dark  + Papirus-Dark icons
+#   default/prefer-light -> Bauhaus-Light + Papirus-Light icons
+#
+# Only machine-generated files are written (gruvbox-current.*, ignored by
+# chezmoi), so tracked dotfiles never drift. Kitty needs nothing here: it
+# reads ~/.config/kitty/{light,dark}-theme.auto.conf on its own.
+set -euo pipefail
+
+GTK4_CURRENT="$HOME/.config/gtk-4.0/gruvbox-current.css"
+ALACRITTY_DIR="$HOME/.config/alacritty"
+CLAUDE_SETTINGS="$HOME/.claude/settings.json"
+
+# Write via rename so watchers (Alacritty live reload) see one complete file.
+replace() {
+  local dest=$1 tmp
+  tmp=$(mktemp "$dest.XXXXXX")
+  cat > "$tmp"
+  mv "$tmp" "$dest"
+}
+
+apply() {
+  local scheme mode Mode
+  scheme=$(gsettings get org.gnome.desktop.interface color-scheme | tr -d "'")
+  if [[ $scheme == prefer-dark ]]; then mode=dark Mode=Dark; else mode=light Mode=Light; fi
+  local theme="Bauhaus-$Mode"
+
+  gsettings set org.gnome.desktop.interface gtk-theme "$theme"
+  gsettings set org.gnome.desktop.interface icon-theme "Papirus-$Mode"
+  dconf write /org/gnome/shell/extensions/user-theme/name "'$theme'"
+
+  # AppIndicator tray icons are app-supplied images (often white, made for a
+  # dark bar); the shell theme can't recolour them. Darken them on the light bar.
+  if [[ $mode == light ]]; then
+    dconf write /org/gnome/shell/extensions/appindicator/icon-brightness -0.9
+    dconf write /org/gnome/shell/extensions/appindicator/icon-opacity 255
+  else
+    dconf reset /org/gnome/shell/extensions/appindicator/icon-brightness
+    dconf reset /org/gnome/shell/extensions/appindicator/icon-opacity
+  fi
+
+  # GTK4/libadwaita; running GTK4 apps pick this up on restart.
+  echo "@import url(\"file://$HOME/.themes/$theme/gtk-4.0/bauhaus.css\");" | replace "$GTK4_CURRENT"
+
+  # Terminal palette: the name in ~/.config/alacritty/palette (set by
+  # term-look), else modus-grey. A variant like "<name>-grey" or
+  # "<name>-tuned" with no dark file of its own uses "<name>-dark"; anything
+  # missing falls back to bauhaus.
+  local palette=modus-grey pfile
+  [[ -s $ALACRITTY_DIR/palette ]] && palette=$(<"$ALACRITTY_DIR/palette")
+  pfile=$ALACRITTY_DIR/$palette-$mode.toml
+  [[ -f $pfile ]] || pfile=$ALACRITTY_DIR/${palette%%-*}-$mode.toml
+  [[ -f $pfile ]] || pfile=$ALACRITTY_DIR/bauhaus-$mode.toml
+  replace "$ALACRITTY_DIR/gruvbox-current.toml" < "$pfile"
+  [[ -f $ALACRITTY_DIR/font-current.toml ]] ||
+    cp "$ALACRITTY_DIR/font-atkinson-light.toml" "$ALACRITTY_DIR/font-current.toml"
+
+  # Zellij: running sessions don't re-detect the terminal's colours, so switch
+  # them explicitly (theme_light/theme_dark in config.kdl cover new sessions).
+  if command -v zellij >/dev/null; then
+    local session
+    while read -r session; do
+      zellij -s "$session" action "set-$mode-theme" 2>/dev/null || true
+    done < <(zellij list-sessions --short --no-formatting 2>/dev/null || true)
+  fi
+
+  # Claude Code's own palette (colour-blind-friendly variant); its dark
+  # colours are unreadable on the light terminal background. Running
+  # sessions need a restart.
+  if [[ -f $CLAUDE_SETTINGS ]] && command -v jq >/dev/null; then
+    local settings
+    settings=$(jq --arg t "$mode-daltonized" '.theme = $t' "$CLAUDE_SETTINGS") &&
+      printf '%s\n' "$settings" | replace "$CLAUDE_SETTINGS"
+  fi
+
+  echo "color-scheme=$scheme -> $theme"
+}
+
+apply
+[[ ${1:-} == --once ]] && exit 0
+
+gsettings monitor org.gnome.desktop.interface color-scheme | while read -r _; do
+  apply
+done

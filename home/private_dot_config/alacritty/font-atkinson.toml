@@ -1,0 +1,12 @@
+# Atkinson Hyperlegible Mono (Braille Institute, OFL), installed from
+# github.com/google/fonts ofl/atkinsonhyperlegiblemono into
+# ~/.local/share/fonts/AtkinsonHyperlegibleMono. No Nerd glyphs of its own;
+# fontconfig falls back to the JetBrains Nerd font for icons.
+# Picked with `term-look font atkinson`.
+[font]
+normal = { family = "Atkinson Hyperlegible Mono", style = "Medium" }
+bold = { family = "Atkinson Hyperlegible Mono", style = "ExtraBold" }
+italic = { family = "Atkinson Hyperlegible Mono", style = "Medium Italic" }
+size = 11.5
+# Cells are 5% wider than JetBrains Mono at the same size; pull them in 1 px.
+offset = { x = -1, y = 2 }

@@ -1,0 +1,9 @@
+[window]
+decorations = "None"
+dynamic_padding = false
+padding = { x = 0, y = 0 }
+
+[general]
+# Both generated (chezmoi-ignored): colours by gruvbox-theme-sync on every
+# light/dark switch, font by `term-look font <name>`.
+import = ["~/.config/alacritty/gruvbox-current.toml", "~/.config/alacritty/font-current.toml"]

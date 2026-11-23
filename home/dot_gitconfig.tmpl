@@ -1,0 +1,20 @@
+[user]
+	email = {{ .email }}
+	name = {{ .name }}
+{{- if .signingkey }}
+	signingkey = {{ .signingkey }}
+{{- end }}
+[push]
+	autoSetupRemote = true
+[diff]
+	tool = meld
+[difftool]
+	prompt = false
+{{- if .signingkey }}
+[commit]
+	gpgsign = true
+[tag]
+	gpgSign = true
+{{- end }}
+[alias]
+	lg = log --oneline --graph --decorate

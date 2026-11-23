@@ -1,0 +1,1 @@
+set -x HISTTIMEFORMAT "%d/%m/%y %T"
